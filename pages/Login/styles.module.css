@@ -1,0 +1,29 @@
+.login {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginBox {
+  height: max-content;
+}
+
+.loginBox form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+  max-width: 400px;
+  border: 2px solid var(--main-color-light);
+  border-radius: 1rem;
+  gap: 1rem;
+}
+
+.loginBox form div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
