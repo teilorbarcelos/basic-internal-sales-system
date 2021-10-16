@@ -12,22 +12,22 @@ interface ICredentials {
 
 const Login: NextPage = () => {
   const { register, handleSubmit } = useForm()
-
+  
   async function signIn(data: ICredentials) {
-
+    
     // await login(data)
     console.log(data)
-
+    
   }
-
+  
   return (
     <>
       <Head>
-        <title>Login de funcionário</title>
-        <meta name="description" content="Página de login para funcionários" />
+        <title>Login</title>
+        <meta name="description" content="Página de Login" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      
       <main className={styles.login}>
         <div className={styles.loginBox}>
           <form onSubmit={handleSubmit(signIn)} >

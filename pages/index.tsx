@@ -1,9 +1,8 @@
 import type { NextPage } from 'next'
-import Link from 'next/link'
 import Head from 'next/head'
-import Image from 'next/image'
 import Footer from '../components/Footer'
 import styles from '../styles/Home.module.css'
+import Navbar from '../components/Navbar'
 
 const Home: NextPage = () => {
   return (
@@ -15,25 +14,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.home}>
-        <nav className={styles.nav}>
-          <div className={styles.container}>
-            <div className={styles.logo}>
-              Logo
-            </div>
-            <ul className={styles.links}>
-              <li>
-                <Link href={"/Login"}>
-                  <a>Login</a>
-                </Link>
-              </li>
-              <li>
-                <Link href={"/Register"}>
-                  <a>Register</a>
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
+        <Navbar />
       </main>
 
       <Footer />
