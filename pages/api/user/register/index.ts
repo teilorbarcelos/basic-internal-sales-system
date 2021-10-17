@@ -1,19 +1,10 @@
 import { hash } from "bcryptjs"
 import { NextApiRequest, NextApiResponse } from "next"
-import connect from "../../../../utils/db"
-
-interface ErrorResponseType {
-  error: string
-}
-
-interface SuccessResponseType {
-  _id: string
-  login: string
-}
+import { insertItem } from "../../../../utils/dbController"
 
 export default async (
   req: NextApiRequest,
-  resp: NextApiResponse<ErrorResponseType | SuccessResponseType>
+  resp: NextApiResponse
 ): Promise<void> => {
 
   if (req.method === 'POST') {
@@ -28,40 +19,25 @@ export default async (
       password2: string
     } = req.body
 
-    if (login.trim() == '') {
+    if (login.indexOf(' ') != -1) {
       resp
         .status(400)
         .json({ error: `Login inválido!` })
       return
     }
 
-    if (password != password2) {
+    if (password.indexOf(' ') != -1 || password != password2) {
       resp
         .status(400)
-        .json({ error: `As senhas informadas são diferentes!` })
-      return
-    }
-
-    const { collection } = await connect('users')
-
-    const lowerCaseLogin = login.toLowerCase()
-    const loginAlreadyExists = await collection.findOne({ login: lowerCaseLogin })
-
-    if (loginAlreadyExists) {
-      resp
-        .status(400)
-        .json({ error: `Login ${lowerCaseLogin} already registered!` })
+        .json({ error: `As senhas não podem conter espaços e devem ser iguais!` })
       return
     }
 
     const passwordHash = await hash(password, 8)
 
-    const response = await collection.insertOne({
-      login,
-      passwordHash
-    })
+    const response = await insertItem({ table: 'users', item: { login, passwordHash } })
 
-    resp.status(201).json(response.ops[0])
+    resp.status(201).json(response)
   } else {
     resp.status(400).json({ error: 'Wrong request method!' })
   }
