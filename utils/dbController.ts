@@ -71,3 +71,53 @@ export async function selectItem({ table, item }: SelectDataProps) {
     return response
   }
 }
+
+export async function updateItem({ table, item }: InsertDataProps) {
+
+  let response
+
+  try {
+    await client.connect()
+
+    const col = db.collection(table)
+
+    await col.updateOne({ login: item.login }, item)
+
+    if (item.login) {
+      response = await col.findOne({ login: item.login })
+    }
+
+  } catch (err) {
+    console.log(err)
+    return err
+  }
+
+  finally {
+    await client.close()
+    return response
+  }
+}
+
+export async function deleteItem({ table, item }: SelectDataProps) {
+
+  let response = true
+
+  try {
+    await client.connect()
+
+    const col = db.collection(table)
+
+    if (item.login) {
+      await col.deleteOne({ login: item.login })
+    }
+
+  } catch (err) {
+    console.log(err)
+    return err
+  }
+
+  finally {
+    await client.close()
+    return response
+  }
+}
