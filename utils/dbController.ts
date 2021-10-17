@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb"
 
 interface NewUserProps {
+  name: string
   login: string
   passwordHash: string
 }

@@ -1,5 +1,5 @@
 import { compare } from "bcryptjs"
-import { sign, verify } from "jsonwebtoken"
+import { Secret, sign, verify } from "jsonwebtoken"
 import { selectItem } from "../dbController"
 
 interface IAuthRequest {
@@ -12,13 +12,14 @@ interface IPayload {
   sub: string
 }
 
-interface IUserResponse {
+export interface IUserResponse {
   _id: string
+  name: string
   login: string
   passwordHash: string
 }
 
-const secretMD5 = process.env.HASH_MD5 || 'd48296968f0b249f659bbf519747fb65'
+export const secretMD5 = process.env.HASH_MD5 as Secret
 
 class AuthService {
   async login({ login, password }: IAuthRequest) {
@@ -48,6 +49,7 @@ class AuthService {
       token,
       user: {
         _id: user._id,
+        name: user.name,
         login: user.login
       }
     }
