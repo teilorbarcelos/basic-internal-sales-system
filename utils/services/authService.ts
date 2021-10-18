@@ -7,11 +7,6 @@ interface IAuthRequest {
   password: string
 }
 
-// interface IPayload {
-//   login: string
-//   sub: string
-// }
-
 export interface IUserResponse {
   _id: string
   name: string
@@ -39,24 +34,6 @@ class AuthService {
       }
     }
   }
-
-  // async verify(token: string) {
-  //   const result = verify(token, secretMD5) as IPayload
-  //   const login = result.login
-  //   const user = await selectItem({ table: 'users', item: { login } }) as IUserResponse
-
-  //   const finalUser = {
-  //     token,
-  //     user: {
-  //       _id: user._id,
-  //       name: user.name,
-  //       login: user.login
-  //     }
-  //   }
-
-  //   return finalUser
-
-  // }
 }
 
 export { AuthService }

@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb"
+import { MongoClient, UpdateResult } from "mongodb"
 
 interface NewUserProps {
   name: string
@@ -62,8 +62,6 @@ export async function selectItem({ table, item }: SelectDataProps) {
   try {
     await client.connect()
 
-    // const col = db.collection(table)
-
     if (table == 'users') {
       if (!item) {
         response = await db.collection(table).find().toArray()
@@ -92,10 +90,8 @@ export async function updateItem({ table, item }: InsertDataProps) {
 
     const col = db.collection(table)
 
-    await col.updateOne({ login: item.login }, item)
-
     if (item.login) {
-      response = await col.findOne({ login: item.login })
+      response = await col.updateOne({ login: item.login }, { $set: item }) as UpdateResult
     }
 
   } catch (err) {
