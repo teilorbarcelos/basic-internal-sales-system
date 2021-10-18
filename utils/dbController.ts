@@ -13,8 +13,15 @@ interface InsertDataProps {
 
 interface SelectDataProps {
   table: string
-  item: {
+  item?: {
     login?: string
+  }
+}
+
+interface DeleteDataProps {
+  table: string
+  item: {
+    login: string
   }
 }
 
@@ -55,10 +62,14 @@ export async function selectItem({ table, item }: SelectDataProps) {
   try {
     await client.connect()
 
-    const col = db.collection(table)
+    // const col = db.collection(table)
 
     if (table == 'users') {
-      response = await col.findOne({ login: item.login })
+      if (!item) {
+        response = await db.collection(table).find().toArray()
+      } else {
+        response = await db.collection(table).findOne({ login: item.login })
+      }
     }
 
   } catch (err) {
@@ -98,7 +109,7 @@ export async function updateItem({ table, item }: InsertDataProps) {
   }
 }
 
-export async function deleteItem({ table, item }: SelectDataProps) {
+export async function deleteItem({ table, item }: DeleteDataProps) {
 
   let response = true
 
