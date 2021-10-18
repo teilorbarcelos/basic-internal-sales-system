@@ -46,7 +46,7 @@ export default async (
     if (userExists) {
       resp
         .status(400)
-        .json({ error: `Este login já existe, escolha um login diferente!` })
+        .json({ error: `This login is already in use!` })
       return
     }
 

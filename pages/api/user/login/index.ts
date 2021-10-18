@@ -29,7 +29,7 @@ export default async (
       resp.status(401).json({ error: 'Wrong login or password!' })
     }
 
-    resp.status(201).json(token)
+    resp.status(200).json(token)
 
   } else {
     resp.status(400).json({ error: 'Wrong request method!' })

@@ -1,5 +1,5 @@
 import { compare } from "bcryptjs"
-import { Secret, sign, verify } from "jsonwebtoken"
+import { Secret, sign } from "jsonwebtoken"
 import { selectItem } from "../dbController"
 
 interface IAuthRequest {
@@ -7,10 +7,10 @@ interface IAuthRequest {
   password: string
 }
 
-interface IPayload {
-  login: string
-  sub: string
-}
+// interface IPayload {
+//   login: string
+//   sub: string
+// }
 
 export interface IUserResponse {
   _id: string
@@ -40,23 +40,23 @@ class AuthService {
     }
   }
 
-  async verify(token: string) {
-    const result = verify(token, secretMD5) as IPayload
-    const login = result.login
-    const user = await selectItem({ table: 'users', item: { login } }) as IUserResponse
+  // async verify(token: string) {
+  //   const result = verify(token, secretMD5) as IPayload
+  //   const login = result.login
+  //   const user = await selectItem({ table: 'users', item: { login } }) as IUserResponse
 
-    const finalUser = {
-      token,
-      user: {
-        _id: user._id,
-        name: user.name,
-        login: user.login
-      }
-    }
+  //   const finalUser = {
+  //     token,
+  //     user: {
+  //       _id: user._id,
+  //       name: user.name,
+  //       login: user.login
+  //     }
+  //   }
 
-    return finalUser
+  //   return finalUser
 
-  }
+  // }
 }
 
 export { AuthService }
